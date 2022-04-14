@@ -329,9 +329,22 @@ function checkmobile() {
 
 	$useragent = strtolower($_SERVER['HTTP_USER_AGENT']);
 
-	/*  */
-	if(strpos($_GET['id'], 'xigua')!==false && strpos($_GET['id'], 'xigua_login')===false){$_G['mobile'] = 1;return '2';}
-	/*  */
+    if(stripos($_SERVER['HTTP_USER_AGENT'], 'miniProgram') !== false){$_G['mobile'] = 1;return '2';}
+    if(stripos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false){$_G['mobile'] = 1;return '2';}
+    /*开始*/
+    if(!(in_array($_GET['ac'], array('', 'index', 'cat', 'view', 'list_item','pub')) && strpos($_GET['id'], 'xigua_hb') !== false) &&
+        !(in_array($_GET['ac'], array('', 'index', 'hangye', 'view', 'myshop_li', 'follow')) && strpos($_GET['id'], 'xigua_hs') !== false) &&
+        strpos($_GET['id'], 'xigua') !== false &&
+        strpos($_GET['id'], 'xigua_login') === false &&
+        strpos($_GET['id'], 'xigua_x') === false &&
+        strpos($_GET['id'], 'xigua_re') === false &&
+        strpos($_GET['id'], 'xigua_sf') === false &&
+        strpos($_GET['id'], 'xigua_p') === false &&
+        strpos($_GET['id'], 'xigua_d') === false &&
+        !($_GET['ac']=='pay' && $_SERVER['REQUEST_METHOD'] == 'POST')) {
+        $_G['mobile'] = 1;return '2';}
+    /*结束*/
+
 	if(dstrpos($useragent, $pad_list)) {
 		return false;
 	}
